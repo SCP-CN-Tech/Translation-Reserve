@@ -27,6 +27,7 @@
     let jsonres = await res.json();
     if (jsonres.status==='ok') {
       invite = jsonres.data.code;
+      copied = false;
     }
   }
   async function copyInvite(e: Event) {
@@ -79,6 +80,9 @@
 
 
 <style>
+  .clickable, .clickable:hover {
+    cursor: pointer;
+  }
   .modal-container {
     background-color: #57575788;
     position: fixed;

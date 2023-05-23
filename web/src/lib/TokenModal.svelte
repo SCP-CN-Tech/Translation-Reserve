@@ -22,6 +22,7 @@
     let jsonres = await res.json();
     if (jsonres.status==='ok') {
       token = jsonres.data.token;
+      copied = false;
     }
   }
   async function copyToken(e: Event) {
