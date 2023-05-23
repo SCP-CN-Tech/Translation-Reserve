@@ -1,0 +1,14 @@
+api_port: 9003
+data_source: sqlite3 # "sqlite3" or "postgres"
+postgres:
+  host: "localhost"
+  port: 5432
+  username: "postgres"
+  password: ""
+  database: "transres"
+  synchronize: true
+  logging: false
+sqlite3:
+  dbpath: "./dist/transres.db"
+  logger: "debug"
+  synchronize: true
