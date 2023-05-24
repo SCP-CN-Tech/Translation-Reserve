@@ -69,7 +69,7 @@
     } else {
       switch (field.toLowerCase()) {
         case "user-id":
-          foundReserves.sort((a, b)=>numcmp(a.user.wikidotId.toLowerCase(), b.user.wikidotId.toLowerCase()));
+          foundReserves.sort((a, b)=>numcmp(a.user.wikidotId, b.user.wikidotId));
           break;
         case "user":
           foundReserves.sort((a, b)=>strcmp(a.user.name.toLowerCase(), b.user.name.toLowerCase()));
