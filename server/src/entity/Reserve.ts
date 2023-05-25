@@ -22,6 +22,9 @@ export class Reserve {
   @Column()
   date: Date;
 
+  @Column()
+  expired: boolean;
+
   serializeSync() {
     return {
       id: this.id,
@@ -30,6 +33,7 @@ export class Reserve {
       title: this.title,
       originWiki: this.originWiki,
       date: this.date.valueOf(),
+      expired: this.expired,
     }
   }
 
@@ -41,10 +45,11 @@ export class Reserve {
       title: reserve.title,
       originWiki: reserve.originWiki,
       date: reserve.date.valueOf(),
+      expired: reserve.expired,
     }
   }
 
-  static from(params: { id?: string, user: User; page: string; title?: string, originWiki?: string; date: Date }) {
+  static from(params: { id?: string, user: User; page: string; title?: string, originWiki?: string; date: Date, expired?: boolean }) {
     let reserve = new Reserve();
     // reserve.id = params.id;
     reserve.user = params.user;
@@ -52,6 +57,7 @@ export class Reserve {
     reserve.title = params.title ?? null;
     reserve.originWiki = params.originWiki ?? null;
     reserve.date = params.date;
+    reserve.expired = params.expired ?? false;
     return reserve;
   }
 }

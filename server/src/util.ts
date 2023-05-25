@@ -153,6 +153,7 @@ export interface NormalizedSearch {
   originWiki?: string,
   title?: string,
   date?: number,
+  expired?: boolean,
 }
 export interface Normalized {
   page: string,
@@ -161,6 +162,7 @@ export interface Normalized {
   originWiki: string,
   title?: string,
   date: number,
+  expired?: boolean,
 }
 /**
  * This function tries to normalize an object into a reserve info with expected properties.
@@ -174,6 +176,7 @@ export function normalizeReserve(info: any) {
     originWiki: "",
     title: "",
     date: NaN,
+    expired: false,
   };
   if (info.wikipage) normalized.page = unixNamify(info.wikipage, {acceptsCategory: true, colonReplacer: ":"});
   if (info.user) normalized.user = info.user;
@@ -181,6 +184,7 @@ export function normalizeReserve(info: any) {
   if (info.originWiki) normalized.originWiki = info.originWiki;
   if (info.title) normalized.title = info.title;
   if (info.date) normalized.date = info.date;
+  if (info.expired) normalized.expired = info.expired;
 
   return normalized;
 }
@@ -196,6 +200,7 @@ export function normalizeSearch(info: any) {
   if (info.originWiki) normalized.originWiki = info.originWiki;
   if (info.title) normalized.title = info.title;
   if (info.date) normalized.date = info.date;
+  if (info.expired) normalized.expired = info.expired;
 
   return normalized;
 }

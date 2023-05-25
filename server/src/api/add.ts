@@ -33,7 +33,6 @@ export default async function add(params: any, req: Request, res: Response) {
           where: {
             user: {wikidotId: normalized[i].userWikidotId},
             page: normalized[i].page,
-            originWiki: normalized[i].originWiki,
             date: new Date(normalized[i].date),
           }
         });
@@ -61,6 +60,7 @@ export default async function add(params: any, req: Request, res: Response) {
           title: normalized[i].title,
           originWiki: normalized[i].originWiki,
           date: new Date(normalized[i].date),
+          expired: normalized[i].expired,
         });
         reserves.push(reserve);
       }

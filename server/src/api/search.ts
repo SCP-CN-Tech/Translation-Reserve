@@ -24,7 +24,10 @@ export default async function search(params: any, req: Request, res: Response) {
     .skip((page - 1) * limit);
 
   if (normalized.page) {
-    dbquery = dbquery.andWhere(`reserve.page LIKE :page`, {page: `%${normalized.page}%`});
+    let pageQuery = normalized.page;
+    if (params.wikipage.startsWith("%")) pageQuery = "%" + pageQuery;
+    if (params.wikipage.endsWith("%")) pageQuery += "%";
+    dbquery = dbquery.andWhere(`reserve.page LIKE :page`, {page: pageQuery});
   }
   if (normalized.title) {
     dbquery = dbquery.andWhere(`reserve.title LIKE :title`, {title: normalized.title});
