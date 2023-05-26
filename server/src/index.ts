@@ -6,6 +6,7 @@ import { connection } from "./data-source";
 import { APIResponse, APIRequest, config } from "./util";
 import * as endpoints from "./api";
 import * as auth from "./auth";
+import * as misc from "./misc";
 
 let dbReady = false;
 
@@ -85,6 +86,14 @@ auth.list.forEach((endpoint) => {
   api.post(`/api/${endpoint}`, (req, res, next) => {
     auth.checkPermsAndExecute(auth[endpoint], req.body, req as APIRequest, res, next);
   });
+});
+misc.list.forEach((endpoint) => {
+  api.get(`${misc[endpoint].path}`, (req, res, next) => {
+    misc[endpoint](req, res, next);
+  })
+  api.get(`/api${misc[endpoint].path}`, (req, res, next) => {
+    misc[endpoint](req, res, next);
+  })
 });
 
 // Listen for the combined endpoint with the individual endpoint as "module" parameter

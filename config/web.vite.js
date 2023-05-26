@@ -24,14 +24,14 @@ export default defineConfig({
     outDir: "../dist/web",
     minify: process.env.MODE === "development" ? false : "terser",
     lib: {
-      // name: 'mstmer',
+      // name: 'transres',
       entry: "index.html",
-      // entry: resolve(process.cwd(), 'web/lib/main.ts'),
+      // entry: resolve(process.cwd(), 'web/src/main.ts'),
       formats: ["esm"],
       fileName: "web",
     },
     // rollupOptions: {
-    //   input: resolve(process.cwd(), 'web/lib/main.ts'),
+    //   input: resolve(process.cwd(), 'web/src/main.ts'),
     // },
     // ssr: true,
     emptyOutDir: true,

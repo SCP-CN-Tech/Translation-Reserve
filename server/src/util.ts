@@ -184,7 +184,7 @@ export function normalizeReserve(info: any) {
   if (info.originWiki) normalized.originWiki = info.originWiki;
   if (info.title) normalized.title = info.title;
   if (info.date) normalized.date = info.date;
-  if (info.expired) normalized.expired = info.expired;
+  if (info.expired) normalized.expired = !!info.expired;
 
   return normalized;
 }
@@ -200,7 +200,7 @@ export function normalizeSearch(info: any) {
   if (info.originWiki) normalized.originWiki = info.originWiki;
   if (info.title) normalized.title = info.title;
   if (info.date) normalized.date = info.date;
-  if (info.expired) normalized.expired = info.expired;
+  if (info.expired) normalized.expired = !!info.expired;
 
   return normalized;
 }
