@@ -71,7 +71,10 @@ export default async function getRealTimeReserve(
     let $ = load(body.body);
     // console.log($(".list-pages-box").html())
     if (!$(".list-pages-box").html()?.trim()) {
-      text += `<div class="transres-msg"><h1>沒有找到相關翻譯預定</h1></div>`;
+      text += `<div class="transres-msg">
+        <h1>沒有找到與此頁相關的翻譯預定信息</h1>
+        <b><a href="http://scp-tech-cn.wikidot.com/reserve:${page}" target="_parent">按此</a></b>創建預定。
+      </div>`;
     } else {
       // res.send(body.body)
       // console.log($("#u-created_at").children("span").attr('class'))
