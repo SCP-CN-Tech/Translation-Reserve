@@ -5,6 +5,7 @@
   import UserProfile, { updateUserProfile } from './lib/UserProfile.svelte';
   let dbRoot = "/api";
 </script>
+
 <main>
   <div class="user-profile-container">
     <UserProfile dbRoot={dbRoot} on:mount={()=>updateUserProfile(dbRoot)} />

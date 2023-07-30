@@ -2,3 +2,4 @@ node_modules/
 ref/
 dist/
 test/
+config.yaml

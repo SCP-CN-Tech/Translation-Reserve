@@ -172,7 +172,9 @@
               {/if}
             </td>
             <td class="transres-title">{transres.title}</td>
-            <td class="transres-date">{transres.date.getFullYear()}-{("0"+(transres.date.getMonth()+1)).slice(-2)}-{("0"+transres.date.getDate()).slice(-2)}</td>
+            <td class="transres-date" data-transres-created={transres.date.valueOf()}>
+              {transres.date.getFullYear()}-{("0"+(transres.date.getMonth()+1)).slice(-2)}-{("0"+transres.date.getDate()).slice(-2)}
+            </td>
           </tr>
         {/each}
       </table>
