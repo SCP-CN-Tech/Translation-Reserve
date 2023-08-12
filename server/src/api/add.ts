@@ -29,9 +29,11 @@ export default async function add(params: any, req: Request, res: Response) {
             );
         }
         let existReserve = await connection.manager.findOne(Reserve, {
-          relations: ["user"],
+          relations: {
+            user: true,
+          },
           where: {
-            user: {wikidotId: normalized[i].userWikidotId},
+            user: { wikidotId: normalized[i].userWikidotId },
             page: normalized[i].page,
             date: new Date(normalized[i].date),
           }

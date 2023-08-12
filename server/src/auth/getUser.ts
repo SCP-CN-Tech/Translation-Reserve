@@ -15,7 +15,9 @@ export default async function getUser(
   let sessionId = req.cookies?.mustemmer_session_id;
   if (sessionId) {
     let session = await connection.manager.findOne(Session, {
-      relations: ["user"],
+      relations: {
+        user: true,
+      },
       where: { id: sessionId },
     });
     if (!session || session.userAgent !== req.headers["user-agent"]) {

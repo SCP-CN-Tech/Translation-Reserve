@@ -53,7 +53,7 @@ export class Reserve {
     let reserve = new Reserve();
     // reserve.id = params.id;
     reserve.user = params.user;
-    reserve.page = unixNamify(params.page);
+    reserve.page = unixNamify(params.page, { acceptsCategory: true });
     reserve.title = params.title ?? null;
     reserve.originWiki = params.originWiki ?? null;
     reserve.date = params.date;

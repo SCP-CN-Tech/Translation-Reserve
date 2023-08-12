@@ -17,7 +17,9 @@ export default async function updatePassword(
     );
   }
   let user = await connection.manager.findOne(Admin, {
-    relations: ["activeSessions"],
+    relations: {
+      activeSessions: true,
+    },
     where: { username: params.username },
   });
   if (!user) throw new APIError("E_USER_NOTEXIST", "User does not exist");

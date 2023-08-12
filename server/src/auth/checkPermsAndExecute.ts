@@ -21,7 +21,9 @@ export default async function checkPermsAndExecute(
       if (sessionId) {
         // by site login
         let session = await connection.manager.findOne(Session, {
-          relations: ["user"],
+          relations: {
+            user: true,
+          },
           where: { id: sessionId },
         });
         if (!session || session.userAgent !== req.headers["user-agent"])

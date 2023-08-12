@@ -29,7 +29,9 @@ export default async function upsert(params: any, req: Request, res: Response) {
             );
         }
         let existReserve = await connection.manager.findOne(Reserve, {
-          relations: ["user"],
+          relations: {
+            user: true,
+          },
           where: {
             user: {wikidotId: normalized[i].userWikidotId},
             page: normalized[i].page,
@@ -42,6 +44,13 @@ export default async function upsert(params: any, req: Request, res: Response) {
           existReserve.expired = normalized[i].expired;
           reserves.push(existReserve);
         } else {
+          /* dedupe */
+          existReserve = reserves.find(u=>{
+            return u.page == normalized[i].page && 
+            u.date.valueOf() == normalized[i].date;
+          });
+          if (existReserve) continue;
+
           let user = await connection.manager.findOne(User, {
             where: {
               wikidotId: normalized[i].userWikidotId,
@@ -51,7 +60,7 @@ export default async function upsert(params: any, req: Request, res: Response) {
           if (!user) {
             user = users.find(u=>{
               return u.wikidotId == normalized[i].userWikidotId && 
-              u.unixName == unixNamifyUser(normalized[i].user)
+              u.unixName == unixNamifyUser(normalized[i].user);
             });
           }
           if (!user) {
