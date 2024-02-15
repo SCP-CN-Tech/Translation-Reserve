@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let dbRoot: string;
+  import { dbRoot } from "../constants";
   import { onMount, onDestroy } from "svelte";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faCopy, faSquareCheck } from "@fortawesome/free-regular-svg-icons";
@@ -23,10 +23,9 @@
         "Content-Type": "application/json",
       },
       credentials: "include",
-    });
-    let jsonres = await res.json();
-    if (jsonres.status==='ok') {
-      invite = jsonres.data.code;
+    }).then(res=>res.json());
+    if (res.status === "ok") {
+      invite = res.data.code;
       copied = false;
     }
   }

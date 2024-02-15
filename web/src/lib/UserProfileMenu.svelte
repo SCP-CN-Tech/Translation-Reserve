@@ -1,6 +1,6 @@
 <script lang="ts">
   export let username: string;
-  export let logout: function;
+  export let logout: (...params: any[]) => void;
   import { showInviteModal, showTokenModal } from "./showModal";
   let menuShown = false;
   async function toggleMenu() {

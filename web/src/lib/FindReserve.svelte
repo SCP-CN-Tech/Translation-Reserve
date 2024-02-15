@@ -1,6 +1,6 @@
 <script lang="ts">
-  export let dbRoot: string;
-  import { wikis } from "../utils.ts";
+  import { dbRoot } from "../constants";
+  import { wikis } from "../utils";
   import { onMount } from "svelte";
   let searchParams: any = {};
   let foundReserves: any[] = [];
@@ -31,14 +31,13 @@
         "Content-Type": "application/json",
       },
       credentials: "include",
-    })
-    let resj = await res.json();
+    }).then(res=>res.json());
     sort = null;
     sortByField = null;
-    if (resj.status === 'ok') {
+    if (res.status === "ok") {
       document.getElementById("search-error-message").innerText = '';
-      foundReserves = resj.data.data.map(v=>{ v.date=new Date(v.date); return v; });
-      foundTotal = resj.data.count;
+      foundReserves = res.data.data.map(v=>{ v.date=new Date(v.date); return v; });
+      foundTotal = res.data.count;
 
       if (page) {
         findPage = page;
@@ -51,7 +50,7 @@
       sortByField = "date";
       sort = "desc";
 
-    } else document.getElementById("search-error-message").innerText = resj.message;
+    } else document.getElementById("search-error-message").innerText = res.message;
   }
   function strcmp(a: string, b: string) {return +(a > b) - +(a < b)};
   function numcmp(a: number, b: number) {return +(a > b) - +(a < b)};
@@ -60,7 +59,7 @@
     if (!th) {
       let el = document.getElementsByClassName(`transres-${field}`);
       if (!el.length) return;
-      th = el[0];
+      th = el[0] as HTMLElement;
     };
     if (th.classList.contains("sort-icon")) th = th.parentElement;
     if (sortByField === field) {

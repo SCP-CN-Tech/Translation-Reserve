@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let dbRoot: string;
+  import { dbRoot } from "../constants";
   import { onMount, onDestroy } from "svelte";
   import { showSignupModal } from "./showModal";
   import { updateUserProfile } from "./UserProfile.svelte";
@@ -27,13 +27,12 @@
         "Content-Type": "application/json",
       },
       credentials: "include",
-    })
-    let jsonres = await res.json();
-    if (jsonres.status!=='ok') {
-      document.getElementById("signup-message").innerText = jsonres.message;
+    }).then(res=>res.json());
+    if (res.status === "ok") {
+      document.getElementById("signup-message").innerText = res.message;
     } else {
       showSignupModal.set(false);
-      updateUserProfile(dbRoot);
+      updateUserProfile();
     }
   }
   const escKeydown = e => {

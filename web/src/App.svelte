@@ -3,17 +3,16 @@
   import FindReserve from "./lib/FindReserve.svelte";
   import { showLoginModal, showSignupModal, showInviteModal, showTokenModal } from "./lib/showModal";
   import UserProfile, { updateUserProfile } from './lib/UserProfile.svelte';
-  let dbRoot = "/api";
 </script>
 
 <main>
   <div class="user-profile-container">
-    <UserProfile dbRoot={dbRoot} on:mount={()=>updateUserProfile(dbRoot)} />
+    <UserProfile on:mount={()=>updateUserProfile()} />
   </div>
   
   <h1>中分翻譯預定存檔</h1>
 
-  <FindReserve dbRoot={dbRoot}/>
+  <FindReserve />
 
   <p>
     由<a href="https://github.com/Zokhoi" target="_blank">Zok</a><a href="https://www.wikidot.com/user:info/jochoi" target="_blank">hoi</a>製作
@@ -21,25 +20,25 @@
 
   {#if $showLoginModal}
     {#await import('./lib/LoginModal.svelte') then value }
-      <svelte:component this={value.default} dbRoot={dbRoot}/>
+      <svelte:component this={value.default} />
     {/await}
   {/if}
 
   {#if $showSignupModal}
     {#await import('./lib/SignupModal.svelte') then value }
-      <svelte:component this={value.default} dbRoot={dbRoot}/>
+      <svelte:component this={value.default} />
     {/await}
   {/if}
 
   {#if $showInviteModal}
     {#await import('./lib/InviteModal.svelte') then value }
-      <svelte:component this={value.default} dbRoot={dbRoot}/>
+      <svelte:component this={value.default} />
     {/await}
   {/if}
 
   {#if $showTokenModal}
     {#await import('./lib/TokenModal.svelte') then value }
-      <svelte:component this={value.default} dbRoot={dbRoot}/>
+      <svelte:component this={value.default} />
     {/await}
   {/if}
   
