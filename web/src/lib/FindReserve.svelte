@@ -2,10 +2,21 @@
   import { dbRoot } from "../constants";
   import { wikis } from "../utils";
   import { onMount } from "svelte";
+  let urlParams = new URLSearchParams(window.location.search);
   let searchParams: any = {};
   let foundReserves: any[] = [];
   let foundTotal: number = null, findLimit = 50, findPage = 1;
   let sort = null, sortByField = null;
+
+  // Parse URL query string
+  for (let [key, val] of [...urlParams.entries()]) {
+    if (key=="limit") {
+      findLimit = parseInt(val);
+    } else if (key=="page") {
+      findPage = parseInt(val);
+    } else searchParams[key] = val;
+  }
+
   async function search(page?: number) {
     let search: any = {
       wikipage: `${searchParams.wikipage?.trim() ?? ""}`,
@@ -22,6 +33,25 @@
       search.limit = searchParams.limit ?? 50;
       search.page = searchParams.page ?? 1;
     }
+
+    // Set up URL query string
+    for (let key in searchParams) {
+      console.log(`${key}: ${typeof searchParams[key]} ${searchParams[key]}`);
+      if (key == "originWiki" && searchParams[key] == "null") {
+        urlParams.delete(key);
+      } else if (searchParams[key]) {
+        urlParams.set(key, searchParams[key]);
+      } else {
+        urlParams.delete(key);
+      }
+    }
+    if (window.history.pushState) {
+      let newUrl = new URL(window.location.href);
+      newUrl.search = urlParams.toString();
+      window.history.pushState({ path: newUrl.href }, "", newUrl.href);
+    } else window.location.search = urlParams.toString();
+
+    // Calls API for search
     let res = await fetch(dbRoot+"/search", {
       method: "POST",
       body: JSON.stringify(search),
@@ -34,6 +64,8 @@
     }).then(res=>res.json());
     sort = null;
     sortByField = null;
+
+    // Handle API result
     if (res.status === "ok") {
       document.getElementById("search-error-message").innerText = '';
       foundReserves = res.data.data.map(v=>{ v.date=new Date(v.date); return v; });
@@ -52,6 +84,7 @@
 
     } else document.getElementById("search-error-message").innerText = res.message;
   }
+
   function strcmp(a: string, b: string) {return +(a > b) - +(a < b)};
   function numcmp(a: number, b: number) {return +(a > b) - +(a < b)};
   function sortBy(field: string, event?: Event) {
@@ -91,6 +124,7 @@
     }
     foundReserves = foundReserves;
   }
+
   onMount(async()=>{
     await search();
   });
